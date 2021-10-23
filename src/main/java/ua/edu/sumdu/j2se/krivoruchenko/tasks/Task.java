@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
+import java.util.Objects;
+
 public class Task {
     private String title;
     private int time;
@@ -75,21 +77,21 @@ public class Task {
 
     // Методи для зчитування та зміни часу виконання для задач, що повторюються:
 
-    /* поверає час початку повторення,
+    /* повертає час початку повторення,
     або час виконання задачі у разі якщо задача не повторюється
      */
     public int getStartTime() {
         return (repeat) ? start : time;
     }
 
-    /* поверає час кінця виконання повторень,
+    /* повертає час кінця виконання повторень,
     або час виконання задачі у разі якщо задача не повторюється
      */
     public int getEndTime() {
         return (repeat) ? end : time;
     }
 
-    // поверає інтервал, або 0 - у разі якщо задача не повторюється.
+    // повертає інтервал, або 0 - у разі якщо задача не повторюється.
     public int getRepeatInterval() {
         return (repeat) ? interval : 0;
     }
@@ -103,7 +105,6 @@ public class Task {
         this.interval = interval;
         if (!repeat) {
             this.repeat = true;
-            this.time = 0;
         }
     }
 
@@ -129,11 +130,25 @@ public class Task {
                 for (int i = start; i < end; i = i + interval) {
                     if (current < i) {
                         nextTime = i;
-                        break;
+                        return nextTime;
                     }
                 }
                 return nextTime;
             }
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Task)) return false;
+        Task task = (Task) o;
+        return getTime() == task.getTime() && start == task.start && end == task.end && interval == task.interval && isActive() == task.isActive() && repeat == task.repeat && Objects.equals(getTitle(), task.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getTime(), start, end, interval, isActive(), repeat);
+    }
+
 }
