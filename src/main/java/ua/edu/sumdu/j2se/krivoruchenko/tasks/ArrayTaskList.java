@@ -38,7 +38,7 @@ public class ArrayTaskList {
         int size = 0;
         for (Task task : array) {
             if (task != null) {
-                size = size + 1;
+                size += 1;
             }
         }
         return size;
@@ -47,13 +47,20 @@ public class ArrayTaskList {
     /* метод, що повертає задачу, яка знаходиться на вказаному місці у
     списку, перша задача має індекс 0.
      */
-    public Task getTask (int index){
-        return array[index];
+    public Task getTask (int index) throws IndexOutOfBoundsException{
+        if (index > array.length - 1) {
+            throw new IndexOutOfBoundsException("Індекс виходить за допустимі межі");
+        }else {
+            return array[index];
+        }
     }
 
     //метод, що повертає підмножину задач, які заплановані на виконання хоча б раз після часу from і не пізніше ніж to.
 
-    public ArrayTaskList incoming (int from, int to){
+    public ArrayTaskList incoming (int from, int to) throws IllegalArgumentException {
+        if ((from < 0)||(to < 0)) {
+            throw new IllegalArgumentException("Аргументи 'from' та 'to' не можуть бути від’ємним числом!");
+        }
         ArrayTaskList taskList = new ArrayTaskList();
         for (Task task : array) {
             if (task != null && (task.nextTimeAfter(from) < to) && (task.nextTimeAfter(from) != -1)) {

@@ -14,7 +14,11 @@ public class Task {
     /* конструктор для неактивної задачі,
      яка виконується у заданий час без повторення
      */
-    public Task(String title, int time) {
+    public Task(String title, int time) throws IllegalArgumentException {
+
+        if (time < 0) {
+            throw new IllegalArgumentException("Час не може бути від’ємним числом!");
+        }
         this.title = title;
         this.time = time;
     }
@@ -23,8 +27,11 @@ public class Task {
     яка виконується у заданщму проміжку часу (початок і кінець)
     із заданим інтервалом
      */
-    public Task(String title, int start, int end, int interval) {
+    public Task(String title, int start, int end, int interval) throws IllegalArgumentException {
         this.title = title;
+        if ((start < 0)||(end < 0)||(interval <= 0)) {
+            throw new IllegalArgumentException("Час (початок, кінець або інтервал задачі) не може бути від’ємним числом!");
+        }
         this.start = start;
         this.end = end;
         this.interval = interval;
