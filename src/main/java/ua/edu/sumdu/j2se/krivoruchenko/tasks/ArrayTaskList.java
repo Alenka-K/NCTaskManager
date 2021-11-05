@@ -2,10 +2,18 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
 import java.util.Arrays;
 
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList {
+
     private Task[] array = new Task[10];
 
+    // метод, що повертає тип об’єкта
+    @Override
+    ListTypes.types getType() {
+        return ListTypes.types.ARRAY;
+    }
+
     // метод, що додає до списку вказану задачу
+    @Override
     public void add (Task task) {
         if (!Arrays.asList(array).contains(null)) {
             array = Arrays.copyOf(array, array.length + 10);
@@ -18,6 +26,7 @@ public class ArrayTaskList {
      така задача була у списку. Якщо у списку було декілька таких задач, необхідно видалити одну
      будь-яку
     */
+    @Override
     public boolean remove (Task task) {
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(task)) {
@@ -34,6 +43,7 @@ public class ArrayTaskList {
     }
 
     // метод, що повертає кількість задач у списку
+    @Override
     public int size () {
         int size = 0;
         for (Task task : array) {
@@ -47,26 +57,12 @@ public class ArrayTaskList {
     /* метод, що повертає задачу, яка знаходиться на вказаному місці у
     списку, перша задача має індекс 0.
      */
+    @Override
     public Task getTask (int index) throws IndexOutOfBoundsException{
         if (index > array.length - 1) {
             throw new IndexOutOfBoundsException("Індекс виходить за допустимі межі");
         }else {
             return array[index];
         }
-    }
-
-    //метод, що повертає підмножину задач, які заплановані на виконання хоча б раз після часу from і не пізніше ніж to.
-
-    public ArrayTaskList incoming (int from, int to) throws IllegalArgumentException {
-        if ((from < 0)||(to < 0)) {
-            throw new IllegalArgumentException("Аргументи 'from' та 'to' не можуть бути від’ємним числом!");
-        }
-        ArrayTaskList taskList = new ArrayTaskList();
-        for (Task task : array) {
-            if (task != null && (task.nextTimeAfter(from) < to) && (task.nextTimeAfter(from) != -1)) {
-                taskList.add(task);
-            }
-        }
-        return taskList;
     }
 }
