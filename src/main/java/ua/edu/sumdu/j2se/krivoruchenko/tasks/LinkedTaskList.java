@@ -1,6 +1,7 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList{
+
     private int size = 0;
     private Node head;
 
@@ -17,8 +18,14 @@ public class LinkedTaskList {
         }
     }
 
+    // метод, що повертає тип об’єкта
+    @Override
+    ListTypes.types getType() {
+        return ListTypes.types.LINKED;
+    }
 
     // метод, що додає до списку вказану задачу
+    @Override
     public void add (Task task) {
         if (head == null){
             head = new Node(task);
@@ -37,6 +44,7 @@ public class LinkedTaskList {
      така задача була у списку. Якщо у списку було декілька таких задач, необхідно видалити одну
      будь-яку
     */
+    @Override
     public boolean remove (Task task) {
         Node current = head;
         Node prev = null;
@@ -58,6 +66,7 @@ public class LinkedTaskList {
     }
 
     // метод, що повертає кількість задач у списку
+    @Override
     public int size () {
         return size;
     }
@@ -65,6 +74,7 @@ public class LinkedTaskList {
     /* метод, що повертає задачу, яка знаходиться на вказаному місці у
     списку, перша задача має індекс 0.
      */
+    @Override
     public Task getTask (int index) throws IndexOutOfBoundsException {
         if ((index < 0)||(index > size)){
             throw new IndexOutOfBoundsException("Індекс виходить за допустимі межі");
@@ -74,22 +84,5 @@ public class LinkedTaskList {
             current = current.next;
         }
         return current.element;
-    }
-
-    //метод, що повертає підмножину задач, які заплановані на виконання хоча б раз після часу from і не пізніше ніж to.
-
-    public LinkedTaskList incoming (int from, int to) throws IllegalArgumentException {
-        if ((from < 0)||(to < 0)) {
-            throw new IllegalArgumentException("Аргументи 'from' та 'to' не можуть бути від’ємним числом!");
-        }
-        LinkedTaskList taskList = new LinkedTaskList();
-        Node current = head;
-        while (current != null) {
-            if ((current.element.nextTimeAfter(from) < to)&&(current.element.nextTimeAfter(from) != -1)) {
-                taskList.add(current.element);
-            }
-            current = current.next;
-        }
-        return taskList;
     }
 }
