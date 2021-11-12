@@ -1,6 +1,9 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
-public class LinkedTaskList extends AbstractTaskList{
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class LinkedTaskList extends AbstractTaskList implements Cloneable{
 
     private int size = 0;
     private Node head;
@@ -13,23 +16,23 @@ public class LinkedTaskList extends AbstractTaskList{
         private final Task element;
         private Node next;
 
-        public Node (Task element) {
+        public Node(Task element) {
             this.element = element;
         }
     }
 
     // метод, що повертає тип об’єкта
     @Override
-    ListTypes.types getType() {
+    public ListTypes.types getType() {
         return ListTypes.types.LINKED;
     }
 
     // метод, що додає до списку вказану задачу
     @Override
-    public void add (Task task) {
-        if (head == null){
+    public void add(Task task) {
+        if (head == null) {
             head = new Node(task);
-        }else {
+        } else {
             Node temp = head;
             while (temp.next != null) {
                 temp = temp.next;
@@ -45,14 +48,14 @@ public class LinkedTaskList extends AbstractTaskList{
      будь-яку
     */
     @Override
-    public boolean remove (Task task) {
+    public boolean remove(Task task) {
         Node current = head;
         Node prev = null;
         for (int i = 0; i < size; i++) {
             if (current.element.equals(task)) {
-                if (prev == null){
+                if (prev == null) {
                     head = current.next;
-                }else {
+                } else {
                     prev.next = current.next;
                 }
                 size--;
@@ -67,7 +70,7 @@ public class LinkedTaskList extends AbstractTaskList{
 
     // метод, що повертає кількість задач у списку
     @Override
-    public int size () {
+    public int size() {
         return size;
     }
 
@@ -75,8 +78,8 @@ public class LinkedTaskList extends AbstractTaskList{
     списку, перша задача має індекс 0.
      */
     @Override
-    public Task getTask (int index) throws IndexOutOfBoundsException {
-        if ((index < 0)||(index > size)){
+    public Task getTask(int index) throws IndexOutOfBoundsException {
+        if ((index < 0) || (index > size)) {
             throw new IndexOutOfBoundsException("Індекс виходить за допустимі межі");
         }
         Node current = head;
@@ -84,5 +87,91 @@ public class LinkedTaskList extends AbstractTaskList{
             current = current.next;
         }
         return current.element;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LinkedTaskList)) return false;
+
+        LinkedTaskList list = (LinkedTaskList) o;
+
+        if (size != list.size) return false;
+        for (int i = 0; i < size; i++) {
+            if (!this.head.element.equals(list.head.element)) {
+                return false;
+            }
+            head = head.next;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31 * size;
+        for (int i = 0; i < size; i++) {
+            result = result + head.element.hashCode();
+            head = head.next;
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        text.append("LinkedTaskList {");
+        if (head != null) {
+            Node temp = head;
+            String sep = "\n";
+            while (temp != null) {
+                text.append(sep).append(temp.element);
+                temp = temp.next;
+            }
+        }
+        return text.append("}\n").toString();
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+            private Node current = head;
+            private Node prev;
+            private Node prevDelete = null;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public Task next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                prevDelete = prev;
+                prev = current;
+                current = current.next;
+                return prev.element;
+            }
+
+            @Override
+            public void remove() {
+                if (prev == null) {
+                    throw new IllegalStateException();
+                }
+                if(prev == head) {
+                    head = head.next;
+                    prev = null;
+                }else {
+                    prev = prevDelete;
+                    prevDelete.next = current;
+                    size--;
+                }
+            }
+
+        };
+    }
+
+    @Override
+    public LinkedTaskList clone() throws CloneNotSupportedException {
+        return (LinkedTaskList) super.clone();
     }
 }

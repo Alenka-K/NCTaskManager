@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
 import java.util.Objects;
 
-public class Task {
+public class Task implements Cloneable{
     private String title;
     private int time;
     private int start;
@@ -150,7 +150,10 @@ public class Task {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
         Task task = (Task) o;
-        return getTime() == task.getTime() && start == task.start && end == task.end && interval == task.interval && isActive() == task.isActive() && repeat == task.repeat && Objects.equals(getTitle(), task.getTitle());
+        return getTime() == task.getTime()
+                && start == task.start && end == task.end
+                && interval == task.interval && isActive() == task.isActive()
+                && repeat == task.repeat && Objects.equals(getTitle(), task.getTitle());
     }
 
     @Override
@@ -158,4 +161,28 @@ public class Task {
         return Objects.hash(getTitle(), getTime(), start, end, interval, isActive(), repeat);
     }
 
+    @Override
+    public String toString() {
+        if (this.isRepeated()) {
+            return "(" +
+                    "title='" + title + '\'' +
+                    ", time=" + time +
+                    ", start=" + start +
+                    ", end=" + end +
+                    ", interval=" + interval +
+                    ", active=" + active +
+                    ')';
+        }else {
+            return "(" +
+                    "title='" + title + '\'' +
+                    ", time=" + time +
+                    ", active=" + active +
+                    ')';
+        }
+    }
+
+    @Override
+    public Task clone() throws CloneNotSupportedException {
+        return (Task) super.clone();
+    }
 }
