@@ -1,14 +1,16 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class ArrayTaskList extends AbstractTaskList {
+public class ArrayTaskList extends AbstractTaskList implements Cloneable{
 
     private Task[] array = new Task[10];
 
     // метод, що повертає тип об’єкта
     @Override
-    ListTypes.types getType() {
+    public ListTypes.types getType() {
         return ListTypes.types.ARRAY;
     }
 
@@ -64,5 +66,68 @@ public class ArrayTaskList extends AbstractTaskList {
         }else {
             return array[index];
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ArrayTaskList)) return false;
+
+        ArrayTaskList list = (ArrayTaskList) o;
+
+        return Arrays.equals(array, list.array);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(array);
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayTaskList\n" +
+                 Arrays.toString(array);
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+
+            private int cursor = 0;
+            private int last = -1;
+
+            @Override
+            public boolean hasNext() {
+                return cursor < size();
+            }
+
+            @Override
+            public Task next() {
+                if (!hasNext())throw new NoSuchElementException();
+                int i = cursor;
+                Task next = getTask(i);
+                last = i;
+                cursor = i + 1;
+                return next;
+            }
+
+            @Override
+            public void remove() {
+                if (last < 0) throw new IllegalStateException();
+                ArrayTaskList.this.remove(getTask(last));
+                if (last < cursor) {
+                    cursor--;
+                    last = -1;
+                }
+            }
+        };
+    }
+
+    @Override
+    public ArrayTaskList clone() throws CloneNotSupportedException {
+        final ArrayTaskList clone;
+        clone = (ArrayTaskList) super.clone();
+        clone.array = this.array.clone();
+        return clone;
     }
 }
