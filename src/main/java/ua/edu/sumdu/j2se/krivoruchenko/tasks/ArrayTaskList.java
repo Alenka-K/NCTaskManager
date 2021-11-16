@@ -3,6 +3,7 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList implements Cloneable{
 
@@ -69,6 +70,11 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
     }
 
     @Override
+    public Stream<Task> getStream() {
+        return Arrays.stream(array);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ArrayTaskList)) return false;
@@ -125,7 +131,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
 
     @Override
     public ArrayTaskList clone() throws CloneNotSupportedException {
-        final ArrayTaskList clone;
+        ArrayTaskList clone;
         clone = (ArrayTaskList) super.clone();
         clone.array = this.array.clone();
         return clone;

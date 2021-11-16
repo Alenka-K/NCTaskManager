@@ -1,7 +1,9 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList implements Cloneable{
 
@@ -87,6 +89,15 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable{
             current = current.next;
         }
         return current.element;
+    }
+
+    @Override
+    public Stream<Task> getStream() {
+        Stream.Builder<Task> builder = Stream.builder();
+        for(int i = 0; i < size; i++) {
+            builder.add(getTask(i));
+        }
+        return builder.build();
     }
 
     @Override
