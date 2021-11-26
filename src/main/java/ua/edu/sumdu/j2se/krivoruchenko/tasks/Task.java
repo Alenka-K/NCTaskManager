@@ -1,12 +1,13 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task implements Cloneable{
     private String title;
-    private int time;
-    private int start;
-    private int end;
+    private LocalDateTime time;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int interval;
     private boolean active;
     private boolean repeat;
@@ -14,10 +15,10 @@ public class Task implements Cloneable{
     /* конструктор для неактивної задачі,
      яка виконується у заданий час без повторення
      */
-    public Task(String title, int time) throws IllegalArgumentException {
+    public Task(String title, LocalDateTime time) throws IllegalArgumentException {
 
-        if (time < 0) {
-            throw new IllegalArgumentException("Час не може бути від’ємним числом!");
+        if (time == null) {
+            throw new IllegalArgumentException("Час не може бути null!");
         }
         this.title = title;
         this.time = time;
@@ -27,10 +28,13 @@ public class Task implements Cloneable{
     яка виконується у заданщму проміжку часу (початок і кінець)
     із заданим інтервалом
      */
-    public Task(String title, int start, int end, int interval) throws IllegalArgumentException {
+    public Task(String title, LocalDateTime start, LocalDateTime end, int interval) throws IllegalArgumentException {
         this.title = title;
-        if ((start < 0)||(end < 0)||(interval <= 0)) {
-            throw new IllegalArgumentException("Час (початок, кінець або інтервал задачі) не може бути від’ємним числом!");
+        if ((start == null)||(end == null)) {
+            throw new IllegalArgumentException("Час (початок, кінець) не може бути null!");
+        }
+        if (interval <= 0) {
+            throw new IllegalArgumentException("Iнтервал задачі не може бути від’ємним числом!");
         }
         this.start = start;
         this.end = end;
@@ -64,18 +68,18 @@ public class Task implements Cloneable{
     /* повертає час виконання задачі,
      або повертає час початку повторення у разі, якщо задача повторюється
      */
-    public int getTime() {
+    public LocalDateTime getTime() {
         return (!repeat) ? time : start;
     }
 
     /* змінює час виконання задачі,
     або перетворює її на таку, що не повторюється, у разі якщо задача повторюється.
      */
-    public void setTime(int time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
         if (repeat) {
-            this.start = 0;
-            this.end = 0;
+            this.start = null;
+            this.end = null;
             this.interval = 0;
             this.repeat = false;
         }
@@ -87,14 +91,14 @@ public class Task implements Cloneable{
     /* повертає час початку повторення,
     або час виконання задачі у разі якщо задача не повторюється
      */
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         return (repeat) ? start : time;
     }
 
     /* повертає час кінця виконання повторень,
     або час виконання задачі у разі якщо задача не повторюється
      */
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         return (repeat) ? end : time;
     }
 
@@ -106,7 +110,7 @@ public class Task implements Cloneable{
     /* Метод, що змінює час початку, кінця та інтервалу задачі,
     а у разі якщо задача не повторюється, перетворює її на таку що повторюється
      */
-    public void setTime(int start, int end, int interval) {
+    public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
         this.start = start;
         this.end = end;
         this.interval = interval;
@@ -121,27 +125,25 @@ public class Task implements Cloneable{
     }
 
     /* метод, що повертає час наступного виконання задачі після вказанного часу,
-    якщо після вказанного часу задача не виконується, то метод повертає -1
+    якщо після вказанного часу задача не виконується, то метод повертає null
      */
-    public int nextTimeAfter(int current) {
+    public LocalDateTime nextTimeAfter(LocalDateTime current) {
         if (!active) {
-            return -1;
+            return  null;
         } else {
             if (!repeat) {
-                return (current >= time) ? -1 : time;
+                return (current.isBefore(time)) ? time : null;
             } else {
-                //вводимо змінну, що початково вважає, що після вказанного часу задача не виконується
-                int nextTime = -1;
 
-                //цикл пошуку наступного виконання задачі. Якщо таке значення є, змінюємо nextTime на це значення
-                for (int i = start; i < end; i = i + interval) {
-                    if (current < i) {
-                        nextTime = i;
-                        return nextTime;
+                //цикл пошуку наступного виконання задачі.
+                for (LocalDateTime i = start; i.compareTo(end) <= 0; i = i.plusSeconds(interval)) {
+                    if (current.isBefore(i)) {
+                        return i;
                     }
                 }
-                return nextTime;
+                return null;
             }
+
         }
     }
 
