@@ -32,7 +32,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
     @Override
     public boolean remove (Task task) {
         for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(task)) {
+            if (array[i] != null && array[i].equals(task)) {
                 if (i != array.length - 1) { // якщо задача яку потрібно видалити не в кінці списку
                     System.arraycopy(array, i + 1, array, i, (array.length - 1) - i);
                     array[array.length-1] = null;

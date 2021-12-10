@@ -1,9 +1,13 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
+
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task implements Cloneable{
+public class Task implements Cloneable, Serializable {
+
     private String title;
     private LocalDateTime time;
     private LocalDateTime start;
@@ -151,11 +155,16 @@ public class Task implements Cloneable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
+
         Task task = (Task) o;
-        return getTime() == task.getTime()
-                && start == task.start && end == task.end
-                && interval == task.interval && isActive() == task.isActive()
-                && repeat == task.repeat && Objects.equals(getTitle(), task.getTitle());
+
+        if (interval != task.interval) return false;
+        if (active != task.active) return false;
+        if (repeat != task.repeat) return false;
+        if (!title.equals(task.title)) return false;
+        if (time != null ? !time.isEqual(task.time) : task.time != null) return false;
+        if (start != null ? !start.isEqual(task.start) : task.start != null) return false;
+        return end != null ? end.isEqual(task.end) : task.end == null;
     }
 
     @Override

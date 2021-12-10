@@ -1,9 +1,11 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks;
 
 
+import java.io.Serializable;
 import java.util.stream.Stream;
 
-public abstract class AbstractTaskList implements Iterable<Task> {
+public abstract class AbstractTaskList implements Iterable<Task>, Serializable {
+
 
     // абстрактні методи
     public abstract ListTypes.types getType();
