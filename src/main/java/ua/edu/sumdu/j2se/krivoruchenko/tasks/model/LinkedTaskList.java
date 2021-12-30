@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model;
 
 
 import java.util.Iterator;
@@ -82,7 +82,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable{
     @Override
     public Task getTask(int index) throws IndexOutOfBoundsException {
         if ((index < 0) || (index > size)) {
-            throw new IndexOutOfBoundsException("Індекс виходить за допустимі межі");
+            throw new IndexOutOfBoundsException("The index is out of range");
         }
         Node current = head;
         for (int i = 0; i < index; i++) {
@@ -156,7 +156,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable{
 
             @Override
             public Task next() {
-                if (!hasNext()) throw new NoSuchElementException();
+                if (!hasNext()) throw new NoSuchElementException("The element being requested does not exist");
                 prevDelete = prev;
                 prev = current;
                 current = current.next;
@@ -166,7 +166,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable{
             @Override
             public void remove() {
                 if (prev == null) {
-                    throw new IllegalStateException();
+                    throw new IllegalStateException("Method 'next' is not called!");
                 }
                 if(prev == head) {
                     head = head.next;

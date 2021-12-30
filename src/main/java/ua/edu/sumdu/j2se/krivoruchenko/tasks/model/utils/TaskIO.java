@@ -1,7 +1,10 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model.utils;
 
 import com.google.gson.*;
-
+import org.apache.log4j.Logger;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.LinkedTaskList;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.Task;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
@@ -10,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class TaskIO {
+    private static final Logger logger = Logger.getLogger(TaskIO.class);
 
     // метод, що записує задачі зі списку у потік у бінарному форматі
     public static void write(AbstractTaskList tasks, OutputStream out) {
@@ -30,7 +34,7 @@ public class TaskIO {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -56,7 +60,7 @@ public class TaskIO {
                 tasks.add(temp);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -66,9 +70,9 @@ public class TaskIO {
             write(tasks, fileOutputStream);
             fileOutputStream.flush();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -77,9 +81,9 @@ public class TaskIO {
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             read(tasks, fileInputStream);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -95,7 +99,7 @@ public class TaskIO {
             gson.toJson(tempList, bufferedWriter);
             bufferedWriter.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -108,7 +112,7 @@ public class TaskIO {
         try (BufferedReader bufferedReader = new BufferedReader(in)) {
             tempList = gson.fromJson(bufferedReader, LinkedTaskList.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
         tempList.getStream().forEach(tasks::add);
     }
@@ -118,7 +122,7 @@ public class TaskIO {
         try (FileWriter fileWriter = new FileWriter(file)){
             write(tasks,fileWriter);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
@@ -127,13 +131,13 @@ public class TaskIO {
         try (FileReader fileReader = new FileReader(file)){
             read(tasks, fileReader);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
     }
 
 
     // серіалізатор та десеріалізатор для обєктів LocalDateTime в задачах
-    public static class LocalDateTimeSerializer implements JsonSerializer < LocalDateTime >, JsonDeserializer < LocalDateTime > {
+    static class LocalDateTimeSerializer implements JsonSerializer < LocalDateTime >, JsonDeserializer < LocalDateTime > {
         private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSS");
 
         @Override

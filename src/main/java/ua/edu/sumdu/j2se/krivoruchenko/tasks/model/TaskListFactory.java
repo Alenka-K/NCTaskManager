@@ -1,4 +1,9 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model;
+
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.ArrayTaskList;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.LinkedTaskList;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.ListTypes;
 
 public class TaskListFactory {
 

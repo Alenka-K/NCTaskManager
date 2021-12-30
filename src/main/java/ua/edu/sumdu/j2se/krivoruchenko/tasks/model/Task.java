@@ -1,6 +1,4 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
-
-
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -175,20 +173,17 @@ public class Task implements Cloneable, Serializable {
     @Override
     public String toString() {
         if (this.isRepeated()) {
-            return "(" +
-                    "title='" + title + '\'' +
-                    ", time=" + time +
-                    ", start=" + start +
+            return
+                    title +
+                    ": start=" + start +
                     ", end=" + end +
                     ", interval=" + interval +
-                    ", active=" + active +
-                    ')';
+                    ", active=" + active;
         }else {
-            return "(" +
-                    "title='" + title + '\'' +
-                    ", time=" + time +
-                    ", active=" + active +
-                    ')';
+            return
+                    title +
+                    ": time=" + time +
+                    ", active=" + active;
         }
     }
 

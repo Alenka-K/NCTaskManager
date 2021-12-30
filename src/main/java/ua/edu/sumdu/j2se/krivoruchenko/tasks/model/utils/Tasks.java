@@ -1,4 +1,6 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model.utils;
+
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.Task;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,7 +14,7 @@ public class Tasks {
     public static Iterable<Task> incoming(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) throws IllegalArgumentException{
 
         if ((start == null)||(end == null) || tasks == null) {
-            throw new IllegalArgumentException("Аргументи не можуть бути null!");
+            throw new IllegalArgumentException("Arguments cannot be null!");
         }else {
             return StreamSupport.stream(tasks.spliterator(), false)
                     .filter(task -> task != null && task.nextTimeAfter(start) != null && task.nextTimeAfter(start).compareTo(end) <= 0).collect(Collectors.toList());
@@ -24,21 +26,24 @@ public class Tasks {
     public static SortedMap<LocalDateTime, Set<Task>> calendar(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) throws IllegalArgumentException {
 
         if ((start == null)||(end == null) || tasks == null) {
-            throw new IllegalArgumentException("Аргументи не можуть бути null!");
+            throw new IllegalArgumentException("Arguments cannot be null!");
         }else {
 
             SortedMap<LocalDateTime, Set<Task>> calendarTask = new TreeMap<>();
 
             for (Task task : incoming(tasks, start, end)) {
-                    LocalDateTime nextDateInCalendar;
-                    for (nextDateInCalendar = task.nextTimeAfter(start); nextDateInCalendar.compareTo(end) <= 0; nextDateInCalendar = nextDateInCalendar.plusSeconds(task.getRepeatInterval())) {
+                LocalDateTime nextDateInCalendar;
+
+                    for (nextDateInCalendar = task.nextTimeAfter(start); nextDateInCalendar.compareTo(end) < 0; nextDateInCalendar = nextDateInCalendar.plusSeconds(task.getRepeatInterval())) {
                         calendarTask.computeIfAbsent(nextDateInCalendar, k -> new HashSet<>()).add(task);
+                        if (!task.isRepeated()) nextDateInCalendar = end;
                     }
                 }
             return calendarTask;
         }
 
     }
+
 
 }
 

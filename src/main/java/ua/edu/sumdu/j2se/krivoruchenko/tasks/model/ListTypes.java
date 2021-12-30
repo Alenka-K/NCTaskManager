@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model;
 
 public class ListTypes {
 

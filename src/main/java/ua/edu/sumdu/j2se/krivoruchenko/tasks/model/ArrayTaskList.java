@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.krivoruchenko.tasks;
+package ua.edu.sumdu.j2se.krivoruchenko.tasks.model;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -63,7 +63,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
     @Override
     public Task getTask (int index) throws IndexOutOfBoundsException{
         if (index > array.length - 1) {
-            throw new IndexOutOfBoundsException("Індекс виходить за допустимі межі");
+            throw new IndexOutOfBoundsException("The index is out of range");
         }else {
             return array[index];
         }
@@ -109,7 +109,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
 
             @Override
             public Task next() {
-                if (!hasNext())throw new NoSuchElementException();
+                if (!hasNext())throw new NoSuchElementException("The element being requested does not exist!");
                 int i = cursor;
                 Task next = getTask(i);
                 last = i;
@@ -119,7 +119,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
 
             @Override
             public void remove() {
-                if (last < 0) throw new IllegalStateException();
+                if (last < 0) throw new IllegalStateException("Method 'next' is not called!");
                 ArrayTaskList.this.remove(getTask(last));
                 if (last < cursor) {
                     cursor--;
