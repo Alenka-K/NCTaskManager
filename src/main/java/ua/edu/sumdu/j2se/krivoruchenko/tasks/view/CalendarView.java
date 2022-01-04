@@ -18,14 +18,14 @@ public class CalendarView implements View{
     @Override
     public typeAction printInfo(AbstractTaskList taskList) {
 
-        System.out.print("Enter the start time of the period (uuuu-MM-dd HH:mm):");
+        System.out.print("Enter the start time of the period (uuuu-MM-dd HH:mm): ");
         String startTime = MainView.checkFormatOfData(in);
 
         LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
-        System.out.print("Enter the end time of the period (yyyy-MM-dd HH:mm):");
+        System.out.print("Enter the end time of the period (yyyy-MM-dd HH:mm): ");
         String endTime = MainView.checkFormatOfData(in);
-
+        System.out.println("==========CALENDAR==============");
         LocalDateTime end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
         SortedMap<LocalDateTime, Set<Task>> calendarTaskView = Tasks.calendar(taskList, start, end);
@@ -33,7 +33,7 @@ public class CalendarView implements View{
             System.out.println(entry.getKey().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ": " +
                     Arrays.toString(entry.getValue().stream().map(Task::getTitle).toArray(String[]::new)));
         }
-        System.out.println("If you want to back in main menu - enter any number or letter (аor example '1' or 'a' )");
+        System.out.print("If you want to back in main menu - enter any number or letter (example '1'): ");
         in.nextLine();
 
         return typeAction.MAIN_MENU_ACTION;

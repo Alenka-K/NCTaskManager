@@ -30,9 +30,9 @@ public class AddTaskView implements View{
 
         // введеня часу в залежності від того повторюється задача чи ні
         if (taskRepeated == 1) {
-            System.out.println("Enter start time (uuuu-MM-dd HH:mm): ");
+            System.out.print("Enter start time (uuuu-MM-dd HH:mm): ");
             String taskStartTime = MainView.checkFormatOfData(in);
-            System.out.println("Enter end time (uuuu-MM-dd HH:mm): ");
+            System.out.print("Enter end time (uuuu-MM-dd HH:mm): ");
             String taskEndTime = MainView.checkFormatOfData(in);
             System.out.print("Enter interval: " );
             int taskInterval = MainView.checkForNumber(1, Integer.MAX_VALUE, in);

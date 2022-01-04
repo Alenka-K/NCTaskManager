@@ -13,7 +13,7 @@ public class DeleteTaskView implements View{
     public typeAction printInfo(AbstractTaskList taskList) {
         TaskListRepresentation.representation(taskList);
 
-        System.out.println("What task will you want to delete? Enter index task:");
+        System.out.print("What task will you want to delete? Enter index task: ");
 
         int index = MainView.checkForNumber(1, taskList.size(),in);
 
