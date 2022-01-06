@@ -4,7 +4,6 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks.notifications;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.Task;
-import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.utils.TaskIO;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.utils.Tasks;
 import java.time.LocalDateTime;
 import java.util.Set;

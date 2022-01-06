@@ -2,7 +2,6 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
-import ua.edu.sumdu.j2se.krivoruchenko.tasks.view.utils.TaskListRepresentation;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +15,7 @@ public class EditTaskView implements View{
     @Override
     public typeAction printInfo(AbstractTaskList taskList) {
 
-        TaskListRepresentation.representation(taskList);
+        MainView.representation(taskList);
         System.out.print("What task will you want to edit? Enter index task: ");
         int index = MainView.checkForNumber(1, taskList.size(), in);
         in.nextLine();
@@ -60,7 +59,7 @@ public class EditTaskView implements View{
                 }
             }
         }
-        System.out.println("Task " + index + " was successfully changed! " + taskList.getTask(index-1));
+        System.out.println("Task " + index + " was successfully changed! " + taskList.getTask(index-1) + "\n");
 
         return typeAction.MAIN_MENU_ACTION;
     }

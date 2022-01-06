@@ -10,12 +10,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 
-
+//клас для зберігання інформації по задачам
 public class TaskDate {
 
     private static final Logger logger = Logger.getLogger(TaskDate.class);
     private File fileForTasks = new File("data.json");
 
+
+    // метод, що зчитує задачі з файла
     public void loadingTasks (AbstractTaskList taskList) {
 
         if (fileForTasks.length() != 0) {
@@ -26,6 +28,8 @@ public class TaskDate {
             }
         }
     }
+
+    // метод, який записує задачі у файл по завершенню роботи додатка
     public void unloadingTasks (AbstractTaskList taskList) {
 
         try {

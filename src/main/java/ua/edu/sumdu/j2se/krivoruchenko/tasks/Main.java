@@ -17,14 +17,14 @@ public class Main {
 
 		AbstractTaskList taskList = new ArrayTaskList();
 		TaskDate taskDate = new TaskDate();
-		taskDate.loadingTasks(taskList);
+		taskDate.loadingTasks(taskList); // зчитування taskList з файлу (якщо такий є)
 		Notificator notificator = new Notificator(taskList);
 		notificator.setDaemon(true);
 		notificator.start();
 		View menuView = new MainView();
 		Controller mainController = new MainController(taskList, menuView);
 		mainController.process(taskList);
-		taskDate.unloadingTasks(taskList);
+		taskDate.unloadingTasks(taskList); // запис у файл taskList по завершенню роботи додатка
 		System.exit(0);
 
 

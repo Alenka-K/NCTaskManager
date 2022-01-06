@@ -64,5 +64,12 @@ public class MainView implements View{
 
         return data;
     }
+    // метод, який виводить список задач з індексами
+    public static void representation(AbstractTaskList taskList){
+        for (int i = 1; i <= taskList.size(); i++) {
+            System.out.print(i + ". ");
+            System.out.println(taskList.getTask(i - 1));
+        }
+    }
 
 }
