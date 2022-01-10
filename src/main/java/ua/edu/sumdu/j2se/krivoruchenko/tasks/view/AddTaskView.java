@@ -4,8 +4,8 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.Task;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.view.utils.ViewTime;
+
 import java.util.Scanner;
 
 
@@ -37,8 +37,8 @@ public class AddTaskView implements View{
             System.out.print("Enter interval: " );
             int taskInterval = MainView.checkForNumber(1, Integer.MAX_VALUE, in);
             Task temp = new Task(taskTitle,
-                    LocalDateTime.parse(taskStartTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                    LocalDateTime.parse(taskEndTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                    ViewTime.parseTime(taskStartTime),
+                    ViewTime.parseTime(taskEndTime),
                     taskInterval);
             temp.setActive(taskActive);
             taskList.add(temp);
@@ -46,8 +46,7 @@ public class AddTaskView implements View{
         }else {
             System.out.print("Enter time (uuuu-MM-dd HH:mm): ");
             String taskTime = MainView.checkFormatOfData(in);
-            Task temp = new Task(taskTitle,
-                    LocalDateTime.parse(taskTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            Task temp = new Task(taskTitle, ViewTime.parseTime(taskTime));
             temp.setActive(taskActive);
             taskList.add(temp);
             System.out.println("New task was successfully added! - " + temp + "\n");

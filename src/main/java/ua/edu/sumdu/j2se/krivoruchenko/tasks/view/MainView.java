@@ -3,13 +3,13 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.Task;
+
 import java.util.Scanner;
 
 
 
 public class MainView implements View{
     Scanner in = new Scanner(System.in);
-
 
     @Override
     public typeAction printInfo(AbstractTaskList taskList) {
@@ -71,5 +71,6 @@ public class MainView implements View{
             System.out.println(taskList.getTask(i - 1));
         }
     }
+
 
 }

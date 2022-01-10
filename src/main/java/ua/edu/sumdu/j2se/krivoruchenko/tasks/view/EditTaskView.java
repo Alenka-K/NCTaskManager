@@ -2,9 +2,8 @@ package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.view.utils.ViewTime;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -49,13 +48,13 @@ public class EditTaskView implements View{
                     System.out.print("Enter new interval: ");
                     int newInterval = MainView.checkForNumber(1, Integer.MAX_VALUE, in);
                     taskList.getTask(index - 1).setTime(
-                            LocalDateTime.parse(newStartTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                            LocalDateTime.parse(newEndTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), newInterval);
+                            ViewTime.parseTime(newStartTime),
+                            ViewTime.parseTime(newEndTime), newInterval);
                 } else {
                     System.out.print("Enter new time (yyyy-MM-dd HH:mm): ");
                     String newTime = MainView.checkFormatOfData(in);
                     taskList.getTask(index - 1).setTime(
-                            LocalDateTime.parse(newTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                            ViewTime.parseTime(newTime));
                 }
             }
         }
