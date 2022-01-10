@@ -34,7 +34,7 @@ public class AddTaskView implements View{
             String taskStartTime = MainView.checkFormatOfData(in);
             System.out.print("Enter end time (uuuu-MM-dd HH:mm): ");
             String taskEndTime = MainView.checkFormatOfData(in);
-            System.out.print("Enter interval: " );
+            System.out.print("Enter interval (seconds): " );
             int taskInterval = MainView.checkForNumber(1, Integer.MAX_VALUE, in);
             Task temp = new Task(taskTitle,
                     ViewTime.parseTime(taskStartTime),

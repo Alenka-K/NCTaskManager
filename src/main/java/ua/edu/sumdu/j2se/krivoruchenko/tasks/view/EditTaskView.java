@@ -45,7 +45,7 @@ public class EditTaskView implements View{
                     String newStartTime = MainView.checkFormatOfData(in);
                     System.out.print("Enter new end time (yyyy-MM-dd HH:mm): ");
                     String newEndTime = MainView.checkFormatOfData(in);
-                    System.out.print("Enter new interval: ");
+                    System.out.print("Enter new interval (seconds): ");
                     int newInterval = MainView.checkForNumber(1, Integer.MAX_VALUE, in);
                     taskList.getTask(index - 1).setTime(
                             ViewTime.parseTime(newStartTime),
