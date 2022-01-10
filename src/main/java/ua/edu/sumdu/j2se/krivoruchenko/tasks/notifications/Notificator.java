@@ -8,6 +8,7 @@ import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.utils.Tasks;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -24,7 +25,7 @@ public class Notificator extends Thread{
     public void run() {
         for (;;) {
             try {
-                sleep(50000);
+                TimeUnit.MINUTES.sleep(1);
                 LocalDateTime now = LocalDateTime.now();
                 SortedMap<LocalDateTime, Set<Task>> temp = Tasks.calendar(taskList, now.plusMinutes(5), now.plusMinutes(6));
                 for (SortedMap.Entry<LocalDateTime, Set<Task>> entry : temp.entrySet()) {
