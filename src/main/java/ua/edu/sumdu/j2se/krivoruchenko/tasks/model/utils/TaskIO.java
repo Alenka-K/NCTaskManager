@@ -69,8 +69,6 @@ public class TaskIO {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             write(tasks, fileOutputStream);
             fileOutputStream.flush();
-        } catch (FileNotFoundException e) {
-            logger.error(e.getStackTrace());
         } catch (IOException e) {
             logger.error(e.getStackTrace());
         }
@@ -80,8 +78,6 @@ public class TaskIO {
     public static void readBinary (AbstractTaskList tasks, File file) {
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             read(tasks, fileInputStream);
-        } catch (FileNotFoundException e) {
-            logger.error(e.getStackTrace());
         } catch (IOException e) {
             logger.error(e.getStackTrace());
         }
