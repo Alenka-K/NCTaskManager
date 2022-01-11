@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.TaskDate;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class DeleteTaskView implements View{
 
         taskList.remove(taskList.getTask(index-1));
         System.out.println("Task with index " + (index)  + " deleted!\n");
+        TaskDate.unloadingTasks(taskList);
 
         return typeAction.MAIN_MENU_ACTION;
     }

@@ -1,9 +1,9 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.TaskDate;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.view.utils.ViewTime;
-
 import java.util.Scanner;
 
 
@@ -59,6 +59,7 @@ public class EditTaskView implements View{
             }
         }
         System.out.println("Task " + index + " was successfully changed! " + taskList.getTask(index-1) + "\n");
+        TaskDate.unloadingTasks(taskList);
 
         return typeAction.MAIN_MENU_ACTION;
     }

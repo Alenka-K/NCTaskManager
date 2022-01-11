@@ -14,11 +14,10 @@ import java.nio.file.Path;
 public class TaskDate {
 
     private static final Logger logger = Logger.getLogger(TaskDate.class);
-    private File fileForTasks = new File("data.json");
-
+    private static File fileForTasks = new File("data.json");
 
     // метод, що зчитує задачі з файла
-    public void loadingTasks (AbstractTaskList taskList) {
+    public static void loadingTasks (AbstractTaskList taskList) {
 
         if (fileForTasks.length() != 0) {
             try (FileReader reader = new FileReader(fileForTasks)) {
@@ -29,8 +28,8 @@ public class TaskDate {
         }
     }
 
-    // метод, який записує задачі у файл по завершенню роботи додатка
-    public void unloadingTasks (AbstractTaskList taskList) {
+    // метод, який записує задачі у файл
+    public static void unloadingTasks (AbstractTaskList taskList) {
 
         try {
             Files.deleteIfExists(Path.of(String.valueOf(fileForTasks)));
@@ -38,6 +37,11 @@ public class TaskDate {
             logger.error(e.getStackTrace());
         }
         TaskIO.writeText(taskList, new File(String.valueOf(fileForTasks)));
+
+    }
+
+    // закриття потоку по завершенню додатка
+    public static void close () {
         System.out.println("Task Manager closed");
         try {
             System.in.close();

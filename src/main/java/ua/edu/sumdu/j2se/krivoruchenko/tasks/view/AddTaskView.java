@@ -1,11 +1,11 @@
 package ua.edu.sumdu.j2se.krivoruchenko.tasks.view;
 
 
+import ua.edu.sumdu.j2se.krivoruchenko.tasks.TaskDate;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.controller.typeAction;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.krivoruchenko.tasks.view.utils.ViewTime;
-
 import java.util.Scanner;
 
 
@@ -51,6 +51,7 @@ public class AddTaskView implements View{
             taskList.add(temp);
             System.out.println("New task was successfully added! - " + temp + "\n");
         }
+        TaskDate.unloadingTasks(taskList);
 
         return typeAction.MAIN_MENU_ACTION;
     }
